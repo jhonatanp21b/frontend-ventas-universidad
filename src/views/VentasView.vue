@@ -34,6 +34,30 @@ function addProductCart() {
 function removeProductCart(index) {
   productListCart.value.splice(index, 1)
 }
+
+function confirmSale() {
+  if (productListCart.value.length === 0) {
+    alert('No hay productos en la lista')
+    return
+  }
+
+  if (moneyPayed.value < totalSale.value) {
+    alert('El dinero ingresado es menor al total de la venta')
+    return
+  }
+
+  const sale = {
+    products: productListCart.value,
+    totalSale: totalSale.value,
+    moneyPayed: moneyPayed.value,
+    change: totalChange.value,
+  }
+
+  productListCart.value = []
+  moneyPayed.value = 0
+
+  alert('Venta Realizada con éxito')
+}
 </script>
 
 <template>
@@ -74,7 +98,7 @@ function removeProductCart(index) {
       <input v-model="moneyPayed" placeholder="Dinero entrante" />
       <h2>Total Cambio</h2>
       <span>{{ totalChange }}</span>
-      <button>Confirmar</button>
+      <button @click="confirmSale">Confirmar</button>
     </section>
   </main>
 </template>
